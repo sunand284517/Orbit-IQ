@@ -7,7 +7,7 @@ class NoveltyService:
     
     Novelty = 1 - max_cosine_similarity(current, history)
     
-    Since CLIP embeddings are L2-normalised, dot product = cosine similarity.
+    Since embeddings are L2-normalised, dot product = cosine similarity.
     """
     def __init__(self, history_size: int = 30):
         self.history_size = history_size

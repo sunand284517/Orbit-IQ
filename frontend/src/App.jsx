@@ -8,7 +8,7 @@ import {
 import { Satellite, Zap, Brain, Radio } from 'lucide-react';
 import './index.css';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '/api')
 /* ── Clock ────────────────────────────────────────────────────────────── */
 function MissionClock() {
   const [now, setNow] = useState(new Date());
@@ -64,7 +64,7 @@ function ChartTooltip({ active, payload }) {
   );
 }
 
-/* ── Transformer Analysis Panel ───────────────────────────────────────── */
+/* ── Semantic Analysis Panel ───────────────────────────────────────── */
 function TransformerPanel({ obs }) {
   const weights = obs?.weights || { semantic: 0.25, novelty: 0.25, urgency: 0.30, mission: 0.15, quality: 0.05 };
 
@@ -83,7 +83,7 @@ function TransformerPanel({ obs }) {
   return (
     <>
       <div className="section-header">
-        <span className="sh-dot" /> <Brain size={11} /> Transformer Analysis
+        <span className="sh-dot" /> <Brain size={11} /> Semantic Analysis
       </div>
 
       {!obs ? (
@@ -92,7 +92,7 @@ function TransformerPanel({ obs }) {
             <Radio size={28} style={{ opacity: 0.15 }} />
             <span>— NO OBSERVATION SELECTED —</span>
             <span style={{ opacity: 0.5, fontSize: '0.6rem' }}>
-              Click any row or map marker<br />to inspect Transformer output
+              Click any row or map marker<br />to inspect semantic output
             </span>
           </div>
         </div>
@@ -108,7 +108,7 @@ function TransformerPanel({ obs }) {
               {obs.id} · {obs.timestamp?.slice(0, 19).replace('T', ' ')}
             </div>
             <div style={{ marginTop: '0.4rem' }}>
-              <span className="model-tag">clip-vit-base-patch32</span>
+              <span className="model-tag">lightweight-semantic-v1</span>
             </div>
           </div>
 
@@ -262,8 +262,8 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <div className="loading-screen">
             <Satellite size={28} style={{ color: '#e8a422', opacity: 0.5 }} />
-            <div>Initialising CLIP Model — standby<span className="cursor-blink" /></div>
-            <div style={{ opacity: 0.4, fontSize: '0.6rem' }}>openai/clip-vit-base-patch32 · 50 observations</div>
+            <div>Initialising semantic engine — standby<span className="cursor-blink" /></div>
+            <div style={{ opacity: 0.4, fontSize: '0.6rem' }}>lightweight-semantic-v1 · 50 observations</div>
           </div>
         </div>
       </div>
@@ -514,7 +514,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* ══ RIGHT SIDEBAR — Transformer ══ */}
+        {/* ══ RIGHT SIDEBAR - Semantic ══ */}
         <div className="sidebar-right">
           <TransformerPanel obs={selectedObs} />
         </div>

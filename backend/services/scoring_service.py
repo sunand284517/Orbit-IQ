@@ -22,7 +22,7 @@ def calculate_information_value(
     Calculates the Information Value score in [0, 100].
 
     Components (all already in [0, 100]):
-      semantic_score   – Transformer CLIP similarity to mission-relevant concepts
+      semantic_score   – Similarity to mission-relevant concepts
       novelty_score    – Cosine distance from historical embeddings
       urgency          – Mission-assigned urgency of the scene type
       mission_relevance– Scene-level mission priority

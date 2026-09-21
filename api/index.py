@@ -4,11 +4,6 @@ import os
 # Add the backend directory to Python path so we can import from it
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
 
-# Redirect HuggingFace cache to /tmp on Vercel (only writable dir in serverless)
-os.environ.setdefault('TRANSFORMERS_CACHE', '/tmp/hf_transformers')
-os.environ.setdefault('HF_HOME', '/tmp/hf_home')
-os.environ.setdefault('HF_DATASETS_CACHE', '/tmp/hf_datasets')
-
 # Import the existing FastAPI app from backend/main.py
 from main import app as backend_app
 

@@ -1,8 +1,5 @@
 fastapi
 uvicorn
-transformers
-torch
-pillow
-pulp
+numpy
 pydantic
 python-multipart

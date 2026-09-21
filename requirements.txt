@@ -3,10 +3,6 @@
 
 fastapi
 uvicorn
-# Use the standard torch package for Vercel's Python builder.
-torch
-transformers
-pillow
-pulp
+numpy
 pydantic
 python-multipart

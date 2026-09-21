@@ -29,7 +29,7 @@ observations: List[ObservationCalculated] = []
 available_downlink_mb: float = 1000.0   # 1 GB downlink window
 last_optimization_result: Optional[dict] = None
 
-# Mission-relevant anchor texts for CLIP semantic scoring
+# Mission-relevant anchor texts for semantic scoring
 TARGET_TEXTS = [
     'wildfire', 'flood', 'construction', 'ship', 'urban area',
     'agriculture', 'forest', 'ocean', 'cloud-covered scene'
@@ -40,11 +40,11 @@ TARGET_TEXTS = [
 
 def process_observation(obs_raw: dict) -> ObservationCalculated:
     """
-    Full Transformer → Novelty → Scoring → Compression pipeline for one observation.
+    Full Semantic -> Novelty -> Scoring -> Compression pipeline for one observation.
     """
     scene = obs_raw['scene']
 
-    # 1. Transformer: generate CLIP text embedding for the scene
+    # 1. Semantic layer: generate a lightweight text embedding for the scene
     embedding = transformer_service.get_text_embedding(scene)
 
     # 2. Semantic relevance: cosine sim of embedding vs mission-relevant anchor texts
@@ -111,7 +111,7 @@ def startup_event():
     raw_list = generate_dummy_observations(50)
     for raw in raw_list:
         observations.append(process_observation(raw))
-    print(f"[OrbitIQ] Startup complete — {len(observations)} observations processed.")
+    print(f"[OrbitIQ] Startup complete - {len(observations)} observations processed.")
 
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────

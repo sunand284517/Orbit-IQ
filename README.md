@@ -1,7 +1,7 @@
 # OrbitIQ — Mission-Aware Satellite Data Optimization
 
 ## Overview
-OrbitIQ uses a **Transformer-based semantic understanding layer + constrained optimization** to decide which satellite observations should be transmitted, compressed, delayed, or discarded when communication bandwidth is limited.
+OrbitIQ uses a **lightweight semantic understanding layer + constrained optimization** to decide which satellite observations should be transmitted, compressed, delayed, or discarded when communication bandwidth is limited.
 
 The core objective is:
 > **Maximize useful mission information delivered per available communication resource.**
@@ -10,10 +10,10 @@ The core objective is:
 Satellites generate terabytes of data daily, but downlink bandwidth is strictly limited. Currently, satellites often transmit blindly or use rigid priorities, leading to bandwidth exhaustion and delayed critical data (e.g., emergencies).
 
 ## Solution
-1. **Transformer Layer (CLIP)**: Extracts semantic embeddings from observations (simulated via text embedding of the scene type for rapid prototyping).
+1. **Semantic Layer**: Extracts lightweight deterministic embeddings from observations using mission-domain aliases, keeping the serverless bundle small enough for Vercel.
 2. **Novelty Detection**: Compares new embeddings against a rolling history using Cosine Similarity to boost the priority of unique events.
 3. **Information Value**: Calculates a holistic 0-100 score based on Semantics, Novelty, Urgency, and Mission Relevance.
-4. **Optimization (PuLP)**: Solves the 0-1 Knapsack problem using Integer Linear Programming to maximize the Total Information Value transmitted without exceeding the available downlink bandwidth.
+4. **Optimization**: Solves the 0-1 Knapsack problem with dynamic programming to maximize the Total Information Value transmitted without exceeding the available downlink bandwidth.
 
 ## Setup & Run
 ### Backend
