@@ -179,6 +179,7 @@ export default function App() {
   const [selectedObs, setSelectedObs] = useState(null);
   const [optResult, setOptResult] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [optimizing, setOptimizing] = useState(false);
   const [simulating, setSimulating] = useState(false);
 
@@ -190,8 +191,13 @@ export default function App() {
       ]);
       setObservations(obsRes.data);
       setStatus(statRes.data);
+      setLoadError('');
       setLoading(false);
-    } catch (e) { console.error(e); }
+    } catch (e) {
+      console.error(e);
+      setLoadError(`Unable to reach OrbitIQ API at ${API}`);
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -250,7 +256,7 @@ export default function App() {
     return 3;
   };
 
-  if (loading) {
+  if (loading || loadError) {
     return (
       <div className="app-layout">
         <div className="topbar">
@@ -262,8 +268,13 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <div className="loading-screen">
             <Satellite size={28} style={{ color: '#e8a422', opacity: 0.5 }} />
-            <div>Initialising semantic engine — standby<span className="cursor-blink" /></div>
-            <div style={{ opacity: 0.4, fontSize: '0.6rem' }}>lightweight-semantic-v1 · 50 observations</div>
+            <div>
+              {loadError || 'Initialising semantic engine - standby'}
+              {!loadError && <span className="cursor-blink" />}
+            </div>
+            <div style={{ opacity: 0.4, fontSize: '0.6rem' }}>
+              {loadError ? 'Set VITE_API_URL to your backend deployment URL' : 'lightweight-semantic-v1 - 50 observations'}
+            </div>
           </div>
         </div>
       </div>
