@@ -3,7 +3,7 @@
 
 fastapi
 uvicorn
-# We will use the standard torch package. Vercel's Python builder doesn't support --index-url.
+# Use the standard torch package for Vercel's Python builder.
 torch
 transformers
 pillow
