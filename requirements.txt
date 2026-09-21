@@ -3,8 +3,8 @@
 
 fastapi
 uvicorn
-# CPU-only PyTorch: ~200MB instead of 800MB — critical for Vercel's size limits
-torch --index-url https://download.pytorch.org/whl/cpu
+# We will use the standard torch package. Vercel's Python builder doesn't support --index-url.
+torch
 transformers
 pillow
 pulp
