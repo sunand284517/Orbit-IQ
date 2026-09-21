@@ -8,8 +8,7 @@ import {
 import { Satellite, Zap, Brain, Radio } from 'lucide-react';
 import './index.css';
 
-const API = 'http://localhost:8000';
-
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 /* ── Clock ────────────────────────────────────────────────────────────── */
 function MissionClock() {
   const [now, setNow] = useState(new Date());
@@ -71,15 +70,15 @@ function TransformerPanel({ obs }) {
 
   const actionClass = !obs ? 'pending'
     : obs.action === 'Transmit' ? 'transmit'
-    : obs.action === 'Delay'   ? 'delay'
-    : obs.action === 'Discard' ? 'discard'
-    : 'pending';
+      : obs.action === 'Delay' ? 'delay'
+        : obs.action === 'Discard' ? 'discard'
+          : 'pending';
 
   const actionLabel = !obs ? '—'
     : obs.action === 'Transmit' ? '▶  TRANSMIT NOW'
-    : obs.action === 'Delay'   ? '◀  DELAYED'
-    : obs.action === 'Discard' ? '✕  DISCARDED'
-    : '·  PENDING OPTIMIZATION';
+      : obs.action === 'Delay' ? '◀  DELAYED'
+        : obs.action === 'Discard' ? '✕  DISCARDED'
+          : '·  PENDING OPTIMIZATION';
 
   return (
     <>
@@ -115,11 +114,11 @@ function TransformerPanel({ obs }) {
 
           {/* Score bars */}
           <div className="score-rows">
-            <ScoreRow label="Semantic Relevance" value={obs.semantic_score}    type="semantic" weight={weights.semantic} />
-            <ScoreRow label="Novelty"            value={obs.novelty_score}     type="novelty"  weight={weights.novelty} />
-            <ScoreRow label="Urgency"            value={obs.urgency}           type="urgency"  weight={weights.urgency} />
-            <ScoreRow label="Mission Relevance"  value={obs.mission_relevance} type="mission"  weight={weights.mission} />
-            <ScoreRow label="Data Quality"       value={obs.data_quality}      type="quality"  weight={weights.quality} />
+            <ScoreRow label="Semantic Relevance" value={obs.semantic_score} type="semantic" weight={weights.semantic} />
+            <ScoreRow label="Novelty" value={obs.novelty_score} type="novelty" weight={weights.novelty} />
+            <ScoreRow label="Urgency" value={obs.urgency} type="urgency" weight={weights.urgency} />
+            <ScoreRow label="Mission Relevance" value={obs.mission_relevance} type="mission" weight={weights.mission} />
+            <ScoreRow label="Data Quality" value={obs.data_quality} type="quality" weight={weights.quality} />
           </div>
 
           {/* IV readout */}
@@ -164,7 +163,7 @@ function TransformerPanel({ obs }) {
           <div className="weights-line">
             <span style={{ color: '#6a7e68' }}>WEIGHTS:</span>
             {Object.entries(weights).map(([k, v]) => (
-              <span key={k} className="w-chip">{k.slice(0,3).toUpperCase()} {v}</span>
+              <span key={k} className="w-chip">{k.slice(0, 3).toUpperCase()} {v}</span>
             ))}
           </div>
         </div>
@@ -176,12 +175,12 @@ function TransformerPanel({ obs }) {
 /* ── Main ─────────────────────────────────────────────────────────────── */
 export default function App() {
   const [observations, setObservations] = useState([]);
-  const [status, setStatus]             = useState({});
-  const [selectedObs, setSelectedObs]   = useState(null);
-  const [optResult, setOptResult]       = useState(null);
-  const [loading, setLoading]           = useState(true);
-  const [optimizing, setOptimizing]     = useState(false);
-  const [simulating, setSimulating]     = useState(false);
+  const [status, setStatus] = useState({});
+  const [selectedObs, setSelectedObs] = useState(null);
+  const [optResult, setOptResult] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [optimizing, setOptimizing] = useState(false);
+  const [simulating, setSimulating] = useState(false);
 
   const fetchAll = useCallback(async () => {
     try {
@@ -239,8 +238,8 @@ export default function App() {
 
   const markerColor = obs => {
     if (obs.action === 'Transmit') return '#5acc6e';
-    if (obs.action === 'Delay')    return '#e8a422';
-    if (obs.action === 'Discard')  return '#d94f3d';
+    if (obs.action === 'Delay') return '#e8a422';
+    if (obs.action === 'Discard') return '#d94f3d';
     return '#3a7a46';
   };
 
@@ -449,9 +448,9 @@ export default function App() {
                       key={i}
                       fill={
                         d.action === 'Transmit' ? '#5acc6e'
-                        : d.action === 'Delay'  ? '#e8a422'
-                        : d.action === 'Discard'? '#d94f3d'
-                        : '#3a7a46'
+                          : d.action === 'Delay' ? '#e8a422'
+                            : d.action === 'Discard' ? '#d94f3d'
+                              : '#3a7a46'
                       }
                     />
                   ))}

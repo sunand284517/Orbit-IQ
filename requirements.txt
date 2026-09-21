@@ -1,0 +1,12 @@
+# OrbitIQ Backend Dependencies
+# Vercel reads requirements.txt from project root
+
+fastapi
+uvicorn
+# CPU-only PyTorch: ~200MB instead of 800MB — critical for Vercel's size limits
+torch --index-url https://download.pytorch.org/whl/cpu
+transformers
+pillow
+pulp
+pydantic
+python-multipart
